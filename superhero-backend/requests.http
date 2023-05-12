@@ -1,0 +1,15 @@
+
+
+GET http://localhost:3010/superheros
+
+
+POST http://localhost:3010/superheros
+Content-Type: application/json
+
+ {
+  "name": "Nom du superhéro2",
+  "phone": "0676896124",
+  "latitude": 16282,
+  "longitude": 12382
+}
+
