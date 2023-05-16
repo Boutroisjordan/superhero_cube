@@ -1,22 +1,49 @@
+*{
+  box-sizing: border-box;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+  color: #000000;
+
 #root {
-  max-width: 1280px;
+  width: 100%;
+  height: 100vh;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+
 }
 
-.logo {
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
-}
-.logo:hover {
+} */
+/* .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+} */
+
+.map-container {
+  width: 100%;
+  height: 90vh;
 }
+.marker {
+  background-color: yellow;
+}
+.modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px;
+  padding: 1rem;
+  text-align: left;
+  background-color: white;
+  color: black;
+}
+
+
+/* Keyframes */
 
 @keyframes logo-spin {
   from {
@@ -39,4 +66,34 @@
 
 .read-the-docs {
   color: #888;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+}
+
+.search-bar {
+  min-width: 340px;
+  height: 40px;
+  background-color: #ffffff;
+    border: 1px solid #DDDDDD;
+    border-radius: 40px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+    transition: box-shadow 0.2s
 }

@@ -12,21 +12,21 @@ export class IncidentsService {
 
   }
 
-  fetchSuperheros() {
+  fetchIncidents() {
     return this.incidentRepository.find();
   }
 
-  createSuperhero(incidentDetails: createIncidentDto) {
-    const newSuperhero = this.incidentRepository.create({...incidentDetails});
-    return this.incidentRepository.save(newSuperhero);
+  createIncident(incidentDetails: createIncidentDto) {
+    const newIncident = this.incidentRepository.create({...incidentDetails});
+    return this.incidentRepository.save(newIncident);
   }
 
-  updateSuperhero(id: number, updateIncidentDto: updateIncidentDto) {
+  updateIncident(id: number, updateIncidentDto: updateIncidentDto) {
     return this.incidentRepository.update({id}, {...updateIncidentDto});
   }
 
-  deleteSuperhero(id: number) {
+  deleteIncident(id: number) {
     return this.incidentRepository.delete(id);
   }
-  
+
 }

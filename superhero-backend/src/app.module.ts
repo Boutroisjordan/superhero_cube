@@ -6,6 +6,12 @@ import { Superhero } from './typeorm/entities/Superhero.entity';
 import { SuperherosModule } from './superheros/superheros.module';
 import { IncidentsModule } from './incidents/incidents.module';
 import { Incident } from './typeorm/entities/Incident.entity';
+import { DeclarationsModule } from './declarations/declarations.module';
+import { Declaration } from './typeorm/entities/Declaration.entity';
+import { UsersModule } from './users/users.module';
+import { User } from './typeorm/entities/User.entity';
+import { Role } from './typeorm/entities/Role.entity';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -14,11 +20,11 @@ import { Incident } from './typeorm/entities/Incident.entity';
     port: 3306,
     username: "root",
     password: "root",
-    database: "cube_superhero",
-    entities: [Superhero, Incident],
+    database: "superhero",
+    entities: [Superhero, Incident, Declaration, User, Role],
     synchronize: true,
-  }), SuperherosModule, IncidentsModule],
+  }), SuperherosModule, IncidentsModule, DeclarationsModule, UsersModule, RolesModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

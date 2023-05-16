@@ -20,4 +20,5 @@ export class createSuperheroDto {
 
   @ApiProperty({example: [{name: "braquage"}]})
   incidents: IncidentForSuperherDto[];
+  
 }

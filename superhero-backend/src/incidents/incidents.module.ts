@@ -10,7 +10,7 @@ import { RouterModule } from '@nestjs/core';
     TypeOrmModule.forFeature([Incident]),
     RouterModule.register([
       {
-        path: 'superhero'
+        path: 'incident'
       }
     ])
   ],

@@ -1,5 +1,6 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Superhero } from "./Superhero.entity";
+import { Declaration } from "./Declaration.entity";
 
 @Entity({ name: "incidents"})
 
@@ -14,6 +15,10 @@ export class Incident {
   @ManyToMany(() => Superhero, superhero => superhero.incidents)
   @JoinTable()
   superheros: Superhero[];
+
+  @OneToMany(() => Declaration, declaration => declaration.incident, {onDelete: 'NO ACTION'})
+  @JoinTable()
+  declarations: Declaration[];
 
   // @ManyToMany(
   //   () => Superhero,

@@ -12,24 +12,24 @@ export class IncidentsController {
 
   @Get()
   async getIncidents() {
-    const superheros = await this.incidentService.fetchSuperheros();
+    const superheros = await this.incidentService.fetchIncidents();
     return superheros;
   }
 
   @Post()
   createIncident(@Body() createSuperheroDto: createIncidentDto) {
-    return this.incidentService.createSuperhero(createSuperheroDto);
+    return this.incidentService.createIncident(createSuperheroDto);
   }
 
   @Put(':id') 
   async updateIncidentById(@Param('id', ParseIntPipe)id: number, @Body() updateSuperhero: updateIncidentDto) {
-    await this.incidentService.updateSuperhero(id, updateSuperhero);
+    await this.incidentService.updateIncident(id, updateSuperhero);
   }
 
   @Delete(':id')
   async remove(@Param('id', ParseIntPipe) id: number) {
     // this.incidentService.
-    await this.incidentService.deleteSuperhero(id);
+    await this.incidentService.deleteIncident(id);
 
   }
 
