@@ -16,10 +16,11 @@ export class Declaration {
   details: string;
 
   @Column()
-  latitude: number;
+  lat: number;
 
   @Column()
-  longitude: number;
+  lng: number;
+
 
   @ManyToOne(() => Incident, incident => incident.declarations, { onDelete: "NO ACTION" })
   @JoinTable()

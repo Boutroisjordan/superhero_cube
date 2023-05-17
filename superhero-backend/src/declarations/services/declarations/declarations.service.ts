@@ -29,9 +29,13 @@ export class DeclarationsService {
     const superheros: Superhero[] = [];
 
 
-    const incidentDto = await this.incidentRepository.findOneBy({ name: declarationDetails.incident.name });
+    const incidentDto = await this.incidentRepository.findOne({
+      where: {
+        id: declarationDetails.incident.id
+      }
+    });
     incident = incidentDto;
-
+    console.log("incident bordel: ", incident, " ", declarationDetails.incident.id);
 
     for (const superheroDto of declarationDetails.superheros) {
       const superhero = await this.superheroRepository.findOneOrFail({
@@ -46,7 +50,7 @@ export class DeclarationsService {
     }
 
     const newDeclaration = this.declarationRepository.create({ ...declarationDetails, incident, superheros });
-    return this.declarationRepository.save(newDeclaration);
+    return await this.declarationRepository.save(newDeclaration);
   }
 
   updateDeclaration(id: number, updateDeclarationDto: updateDeclarationDto) {

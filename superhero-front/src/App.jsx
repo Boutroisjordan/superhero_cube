@@ -6,17 +6,16 @@ import Navbar from "./components/Navbar";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import PageMap from "./pages/PageMap";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
+import RedirectRouter from "./components/RedirectRouter";
+import { MainContextProvider } from "./context/MainContext";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" exact element={<PageMap />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </BrowserRouter>
+      <MainContextProvider>
+        <RedirectRouter />
+      </MainContextProvider>
     </>
   );
 }

@@ -6,22 +6,22 @@ import { SuperheroByIdDto } from "src/superheros/dtos/SuperheroById.Dto";
 
 export class createDeclarationDto {
 
-  @ApiProperty({example: "Titre de la déclaration"})
+  @ApiProperty({ example: "Titre de la déclaration" })
   name: string;
 
-  @ApiProperty({example: "Descriptif "})
+  @ApiProperty({ example: "Descriptif " })
   details: string;
 
-  @ApiProperty({example: 12382})
-  latitude: number;
+  @ApiProperty({ example: 49.0241 })
+  lat: number;
 
-  @ApiProperty({example: 12382})
-  longitude: number;
+  @ApiProperty({ example: 1.1508 })
+  lng: number;
 
-  @ApiProperty({example: [{id: 1}]})
+  @ApiProperty({ example: [{ id: 1 }] })
   superheros: SuperheroByIdDto[];
 
-  @ApiProperty({example: {name: "braquage"}})
+  @ApiProperty({ example: { id: 1 } })
   incident: IncidentForSuperherDto;
 
 }
