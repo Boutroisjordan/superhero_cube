@@ -6,6 +6,8 @@ import { Declaration } from 'src/typeorm/entities/Declaration.entity';
 import { Incident } from 'src/typeorm/entities/Incident.entity';
 import { Superhero } from 'src/typeorm/entities/Superhero.entity';
 import { Repository } from 'typeorm';
+import { calculateDistance } from "../../../utils/calculateDistance";
+
 
 @Injectable()
 export class DeclarationsService {
@@ -37,24 +39,111 @@ export class DeclarationsService {
     incident = incidentDto;
     console.log("incident bordel: ", incident, " ", declarationDetails.incident.id);
 
-    for (const superheroDto of declarationDetails.superheros) {
-      const superhero = await this.superheroRepository.findOneOrFail({
-        where: {
-          id: superheroDto.id,
-        }
-      })
+    if (declarationDetails.superheros) {
 
-      superheros.push(superhero);
-      console.log("push hero: ", superhero)
-      console.log("from request hero: ", declarationDetails.superheros)
+      for (const superheroDto of declarationDetails.superheros) {
+        const superhero = await this.superheroRepository.findOneOrFail({
+          where: {
+            id: superheroDto.id,
+          }
+        })
+
+        superheros.push(superhero);
+      }
     }
 
+    console.log(`les coords de la déclaration:{
+      lat: ${declarationDetails.lat},
+      lng: ${declarationDetails.lng}
+    } `)
+
+    const start = {
+      latitude: 49.0270129,
+      longitude: 1.151361
+    }
+
+    const end = {
+      latitude: 49.1,
+      longitude: 1.1167
+    }
+
+
+    const nearestSuperheros = await this.superheroRepository.find({ relations: ["incidents"] });
+    const superherosArray = [];
+
+    for (const superhero of nearestSuperheros) {
+
+      const distance = calculateDistance(superhero.latitude, superhero.longitude, declarationDetails.lat, declarationDetails.lng);
+      console.log("superhero nearest: ", distance, " name: ", superhero.name, " ", distance < 0)
+
+      console.log(distance);
+      if (distance < 50) {
+        // superherosArray.push(superhero);
+        const hasIncidentWithName = superhero.incidents.some((incident: Incident) => incident.name === 'braquage');
+        if (hasIncidentWithName) superherosArray.push({ "superhero": superhero, "distance": Math.round(distance) });
+      }
+
+    }
+
+    console.log("coucou: ", superherosArray)
+
     const newDeclaration = this.declarationRepository.create({ ...declarationDetails, incident, superheros });
-    return await this.declarationRepository.save(newDeclaration);
+    // return newDeclaration;
+    await this.declarationRepository.save(newDeclaration);
+    return {
+      "declaration": newDeclaration,
+      "nearestSuperheros": superherosArray
+    }
   }
 
-  updateDeclaration(id: number, updateDeclarationDto: updateDeclarationDto) {
-    return this.declarationRepository.update({ id }, { ...updateDeclarationDto });
+  async updateDeclaration(id: number, updateDeclarationDto: updateDeclarationDto) {
+    const findDeclaration = await this.declarationRepository.findOne({ where: { id: id }, relations: ["incident", "superheros"] });
+    console.log(findDeclaration, " OOOGG");
+
+    if (!findDeclaration) {
+      throw new Error("introuvable");
+    }
+
+    var incident: Incident;
+    const superheros: Superhero[] = [];
+
+    // console.log("OG: ", findDeclaration)
+    // console.log("l'update: ", updateDeclarationDto)
+    // console.log("l'incident: ", updateDeclarationDto.incident)
+
+    const incidentDto = await this.incidentRepository.findOne({
+      where: {
+        id: updateDeclarationDto.incident.id
+      }
+    });
+
+
+    incident = incidentDto;
+
+    // console.log("l'incident after: ", incidentDto)
+
+
+
+    if (updateDeclarationDto.superheros.length > 0) {
+
+      for (const superheroDto of updateDeclarationDto.superheros) {
+        const superhero = await this.superheroRepository.findOneOrFail({
+          where: {
+            id: superheroDto.id,
+          }
+        })
+        superheros.push(superhero);
+      }
+    }
+    if (updateDeclarationDto.details) findDeclaration.details = updateDeclarationDto.details;
+    findDeclaration.lat = updateDeclarationDto.lat;
+    findDeclaration.lng = updateDeclarationDto.lng;
+    findDeclaration.name = updateDeclarationDto.name;
+    findDeclaration.incident = incident;
+    findDeclaration.superheros = superheros;
+
+
+    return await this.declarationRepository.save(findDeclaration);
   }
 
   async deleteDeclaration(id: number) {

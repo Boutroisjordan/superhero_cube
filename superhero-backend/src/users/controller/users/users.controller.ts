@@ -1,10 +1,11 @@
-import { BadRequestException, Body, Controller, Get, Post, Res } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { BadRequestException, Body, Controller, Get, Post, Res, SetMetadata, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UsersService } from 'src/users/services/users/users.service';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
 import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from 'src/users/dtos/LoginUser.dto';
 import { JwtService } from '@nestjs/jwt';
+import { UsersGuard } from 'src/users/guards/users/users.guard';
 
 
 @ApiTags('user')
@@ -18,6 +19,9 @@ export class UsersController {
   ) { }
 
   @Get()
+  @ApiBearerAuth()
+  @UseGuards(UsersGuard)
+  @SetMetadata('role', ["admin", "customer"])
   async get() {
     const users = await this.userService.fetchUsers();
     return users;
@@ -30,7 +34,6 @@ export class UsersController {
 
     return await this.userService.createUser(createUserDto);
   }
-
 
   @Post("/login")
   async Login(
@@ -53,6 +56,7 @@ export class UsersController {
     return {
       message: "success",
       jwt,
+      username: user.name
     };
   }
 }

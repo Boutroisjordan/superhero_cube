@@ -1,10 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg width="50px" height="50px" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-  <g id="flood-2" transform="translate(-2 -2)">
-    <path id="secondary" fill="#2ca9bc" d="M18,7.28V13H6V7.28L12,3Z"/>
-    <path id="primary" d="M4,8.71,12,3l8,5.71" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
-    <path id="primary-2" data-name="primary" d="M6,7.29V13m12,0V7.29M9,21h6M6,17H18M3,13H21" fill="none" stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Calque_2" data-name="Calque 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 169 221.02">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f4d87f;
+        isolation: isolate;
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <g id="Calque_1-2" data-name="Calque 1">
+    <path class="cls-1" d="m16.5,133.21c4.62,4.58,29.17,28,68,28,6.5,0,40.43-.66,68-28-22.67,29-45.33,58-68,87-22.67-29-45.33-58-68-87Z"/>
+    <image width="1024" height="1024" transform="scale(.17)" xlink:href="../../../Downloads/flood.png"/>
   </g>
 </svg>

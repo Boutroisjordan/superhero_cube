@@ -10,14 +10,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lottiefiles/react-lottie-player": "^3.5.3",
     "@react-google-maps/api": "^2.18.1",
     "axios": "^1.4.0",
     "i": "^0.3.7",
+    "jwt-decode": "^3.1.2",
     "npm": "^9.6.6",
     "react": "^18.2.0",
+    "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-google-places-autocomplete": "^4.0.1",
     "react-router-dom": "^6.11.1",
-    "styled-components": "^5.3.10"
+    "styled-components": "^5.3.10",
+    "use-places-autocomplete": "^4.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

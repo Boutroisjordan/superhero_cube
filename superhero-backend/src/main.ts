@@ -10,7 +10,9 @@ async function bootstrap() {
     .setDescription("L'api pour les gens en galères")
     .setVersion('0.1')
     .addTag('superhero')
+    .addBearerAuth()
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 

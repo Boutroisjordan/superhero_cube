@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect, memo } from "react";
+import { useState, useMemo, useEffect, memo, useContext } from "react";
 import {
   GoogleMap,
   useLoadScript,
@@ -8,6 +8,7 @@ import {
 } from "@react-google-maps/api";
 import flameLogo from "../assets/fire.svg";
 import CustomMarker from "./CustomMarker";
+import { MainContext } from "../context/MainContext";
 
 const data = [
   {
@@ -112,8 +113,10 @@ const data = [
   },
 ];
 
-function CustomMap() {
+function CustomMap(props) {
+  const { fetchDeclarations, declarations } = useContext(MainContext);
   const center = useMemo(() => ({ lat: 49.0241, lng: 1.1508 }), []);
+  const selectedMarker = props.selected ?? center;
   const [distance, setDistance] = useState(null);
   const [origins, setOrigins] = useState(null);
   const [destination, setDestination] = useState(null);
@@ -123,36 +126,45 @@ function CustomMap() {
     fullscreenControl: false,
   };
 
+  const [declarationsData, setDeclarationsData] = useState(null);
+
+  const handleFetchData = async () => {
+    const result = await fetchDeclarations();
+  };
+
+  useEffect(() => {
+    handleFetchData();
+    console.log(declarations, " declarations");
+  }, []);
   return (
     <div>
       <GoogleMap
         zoom={10}
-        center={center}
+        center={selectedMarker}
         mapContainerClassName="map-container"
         options={options}
       >
-        {data.map((declaration) => {
-          return (
-            // <MarkerF position={declaration.position} icon={flameLogo} />
-            <CustomMarker
-              position={declaration.position}
-              type={declaration.type}
-              key={declaration.key}
-              title={declaration.title}
-              details={declaration.details}
-            />
-          );
-        })}
+        {declarations != null
+          ? declarations.map((declaration) => {
+              return (
+                // <MarkerF position={declaration.position} icon={flameLogo} />
+                <CustomMarker
+                  position={{ lat: declaration.lat, lng: declaration.lng }}
+                  type={declaration.incident.name ?? null}
+                  key={declaration.id}
+                  title={declaration.name}
+                  details={declaration.details}
+                />
+              );
+            })
+          : null}
 
-        {/* <CustomMarker key={} position={{ lat: 1, lng: 2 }} type="braquage" /> */}
-        {/* <Marker position={{ lat: 49.1, lng: 1.1167 }} /> */}
-        {/* <MarkerF
-          position={{ lat: 49.1, lng: 1.1167 }}
-          // icon={{
-          //   url: require("./assets/flame.png").default,
-          // }}
-          icon={flameLogo}
-        /> */}
+        {props.selected ? (
+          <MarkerF
+            position={{ lat: props.selected.lat, lng: props.selected.lng }}
+            zoomOnClick={true}
+          ></MarkerF>
+        ) : null}
       </GoogleMap>
       {/* <DistanceMatrixService
         options={{

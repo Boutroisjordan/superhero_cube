@@ -54,6 +54,7 @@ export class RolesService {
     if (findRole) {
       findRole.name = nameLowerCase;
     }
+    this.roleRepository.save(findRole);
 
     return findRole;
   }

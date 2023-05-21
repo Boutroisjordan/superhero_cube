@@ -6,6 +6,7 @@ import { UsersController } from './controller/users/users.controller';
 import { UsersService } from './services/users/users.service';
 import { JwtModule } from '@nestjs/jwt';
 import { Role } from 'src/typeorm/entities/Role.entity';
+import { UsersGuard } from './guards/users/users.guard';
 
 @Module({
   imports: [
@@ -22,6 +23,6 @@ import { Role } from 'src/typeorm/entities/Role.entity';
     })
   ],
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService, UsersGuard]
 })
 export class UsersModule { }

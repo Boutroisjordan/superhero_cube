@@ -4,6 +4,7 @@ import styled, { keyframes, createGlobalStyle } from "styled-components";
 import "../App.css";
 import { MainContext } from "../context/MainContext";
 import { HttpStatusCode } from "axios";
+import { useNavigate } from "react-router-dom";
 
 const jump = keyframes`
   from{
@@ -123,10 +124,13 @@ const Title = styled.h2`
 `;
 
 function Login() {
-  const { fetchUsers, user, setUser, postLogin } = useContext(MainContext);
+  const { fetchUsers, user, setUser, postLogin, setUsername, setToken } =
+    useContext(MainContext);
 
+  const [hasError, setHasError] = useState(false);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -138,19 +142,31 @@ function Login() {
       file: false,
       token: user,
     };
-    const response = await postLogin(data, params);
 
-    if (response.status === HttpStatusCode.Created) {
-      setUser(response.data.jwt);
+    try {
+      const response = await postLogin(data, params);
+      if (response.status === 200 || response.status === 201) {
+        setUser(response.data.jwt);
+        setToken(response.data.jwt);
+        setUsername(response.data.username);
+        navigate("/");
+      } else {
+        throw new Error("Erreur HTTP ");
+      }
+    } catch (e) {
+      console.log("l'erruer ma gueule: ", e);
+      setHasError("Bad Creds");
     }
   };
 
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
+    setHasError(false);
   };
 
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
+    setHasError(false);
   };
   const handlefetch = async (e) => {
     // let result = await fetchUsers();
@@ -163,7 +179,7 @@ function Login() {
 
   return (
     <>
-      Le user: {user}
+      {/* Le user: {user} */}
       <GlobalStyle />
       <Wrapper>
         <Form>
@@ -185,6 +201,7 @@ function Login() {
           />
           <Button onClick={handleSubmit}>Next</Button>
         </Form>
+        {hasError ?? null}
       </Wrapper>
     </>
   );

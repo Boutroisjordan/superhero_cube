@@ -1,28 +1,33 @@
-import { useState, useMemo, useEffect } from "react";
-import flameLogo from "../assets/fire.svg";
-import {
-  GoogleMap,
-  useLoadScript,
-  MarkerF,
-  useJsApiLoader,
-  DistanceMatrixService,
-} from "@react-google-maps/api";
+import { useState, useMemo, useEffect, useContext } from "react";
+import { useLoadScript } from "@react-google-maps/api";
 import "../App.css";
 import CustomMap from "../components/CustomMap";
-import Navbar from "../components/Navbar";
+import { MainContext } from "../context/MainContext";
+import FormDeclaration from "../components/FormDeclaration";
+
+const libraries = ["places"];
+const options = {
+  googleMapsApiKey: import.meta.env.VITE_API_KEY,
+  libraries,
+};
 
 function PageMap() {
-  const [count, setCount] = useState(0);
+  const { isAuthenticated } = useContext(MainContext);
+  const [openDecla, setOpenDecla] = useState(false);
+  const [addDecla, setAddDecla] = useState(null);
 
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: import.meta.env.VITE_API_KEY,
-  });
+  const handleSetDecla = (decla) => {
+    setAddDecla(decla);
+    console.log("Tu recois les cords: ", decla);
+  };
+
+  const { isLoaded } = useLoadScript(options);
 
   if (!isLoaded) return <div>Loading ...</div>;
   return (
     <>
-      <CustomMap />
+      <CustomMap selected={addDecla} />
+      {isAuthenticated() ? <FormDeclaration cbDecla={handleSetDecla} /> : null}
     </>
   );
 }

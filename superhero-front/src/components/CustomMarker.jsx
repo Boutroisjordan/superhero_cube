@@ -7,16 +7,17 @@ import {
   InfoWindowF,
 } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
-import flameLogo from "../assets/fire.svg";
-import braquageLogo from "../assets/braquage.svg";
+import flameLogo from "../assets/fire-2.svg";
+// import braquageLogo from "../assets/braquage.svg";
+import braquageLogo from "../assets/braquage-2.svg";
 import carLogo from "../assets/car.svg";
-import prisonLogo from "../assets/escape.svg";
-import planeLogo from "../assets/plane.svg";
-import snakeLogo from "../assets/snake.svg";
-import landslideLogo from "../assets/landslide.png";
-import manifLogo from "../assets/manif.svg";
-import floodLogo from "../assets/flood.svg";
-import gasLogo from "../assets/fire.svg";
+import prisonLogo from "../assets/prison-2.svg";
+import planeLogo from "../assets/plane-2.svg";
+import snakeLogo from "../assets/snake-2.svg";
+import landslideLogo from "../assets/lands.svg";
+import manifLogo from "../assets/manif-2.svg";
+import floodLogo from "../assets/floood.svg";
+import gasLogo from "../assets/gaz.svg";
 
 const logoMap = {
   fire: flameLogo,
@@ -77,8 +78,8 @@ export default function CustomMarker(props) {
           >
             <>
               <h1>{title}</h1>
+              <p>{details}</p>
             </>
-            {/* <p>{details}</p> */}
             {/* <h1>lololo</h1> */}
           </InfoWindowF>
         ) : null}

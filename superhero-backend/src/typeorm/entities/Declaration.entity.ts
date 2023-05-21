@@ -15,10 +15,10 @@ export class Declaration {
   @Column()
   details: string;
 
-  @Column()
+  @Column({ type: "float" })
   lat: number;
 
-  @Column()
+  @Column({ type: "float" })
   lng: number;
 
 

@@ -19,10 +19,10 @@ export class User {
   @Column({ unique: true })
   password: string;
 
-  @Column()
+  @Column({ type: "float" })
   latitude: number;
 
-  @Column()
+  @Column({ type: "float" })
   longitude: number;
 
   @ManyToOne(() => Role, role => role.users)

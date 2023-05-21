@@ -15,10 +15,10 @@ export class Superhero {
   @Column({ unique: true })
   phone: string;
 
-  @Column()
+  @Column({ type: "float" })
   latitude: number;
 
-  @Column()
+  @Column({ type: "float" })
   longitude: number;
 
   @ManyToMany(() => Incident, incident => incident.superheros)

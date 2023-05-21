@@ -12,14 +12,14 @@ export class SuperherosService {
   constructor(
     @InjectRepository(Superhero) private superheroRepository: Repository<Superhero>,
     @InjectRepository(Incident) private incidentRepository: Repository<Incident>,
-    ) {
+  ) {
 
   }
 
   fetchSuperheros() {
     return this.superheroRepository.createQueryBuilder('superhero')
-    .leftJoinAndSelect('superhero.incidents', 'incident')
-    .getMany();
+      .leftJoinAndSelect('superhero.incidents', 'incident')
+      .getMany();
   }
 
   async createSuperhero(superheroDetails: createSuperheroDto) {
@@ -29,16 +29,16 @@ export class SuperherosService {
       const incident = await this.incidentRepository.findOneBy({ name: incidentDto.name });
       incidents.push(incident);
     }
-  
+
     const newSuperhero = this.superheroRepository.create({ ...superheroDetails, incidents });
     return this.superheroRepository.save(newSuperhero);
   }
 
   async updateSuperhero(id: number, updateSuperheroDto: updateSuperheroDto) {
     const superhero = await this.superheroRepository.createQueryBuilder('superhero')
-    .leftJoinAndSelect('superhero.incidents', 'incident')
-    .where('superhero.id = :id', { id })
-    .getOne();
+      .leftJoinAndSelect('superhero.incidents', 'incident')
+      .where('superhero.id = :id', { id })
+      .getOne();
 
     superhero.name = updateSuperheroDto.name;
     superhero.phone = updateSuperheroDto.phone;
