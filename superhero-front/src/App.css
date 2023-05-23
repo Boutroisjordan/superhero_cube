@@ -117,7 +117,8 @@ transition: .3s;
 }
 
  .superhero:hover {
-background-color: #3b2156;
+/* background-color: #3b2156; */
+background-color: #4b45ae;
 }
  .superhero:hover .eclair {
   opacity: 1;

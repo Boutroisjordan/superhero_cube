@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 // import SuperHeroLogo from "../assets/icon-sphero.png";
 import LightLogo from "../assets/elcair.png";
-import SuperHeroLogo from "../assets/superhero-only2.png";
+import SuperHeroLogo from "../assets/superhero-only.png";
 import MairieLogo from "../assets/mairie.png";
 import Rain from "../assets/rain.webp";
 
@@ -84,7 +84,7 @@ export default function Navbar() {
           </div>
         </div>
 
-        {isAuthenticated() ? null : <Link to={`register`}>Register</Link>}
+        {/* {isAuthenticated() ? null : <Link to={`register`}>Register</Link>} */}
       </div>
       <div>
         {isAuthenticated() ? (

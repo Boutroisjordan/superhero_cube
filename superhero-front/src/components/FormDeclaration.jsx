@@ -250,6 +250,7 @@ export default function FormDeclaration(props) {
                 buttons={["play", "repeat", "frame", "debug"]}
               />
             </Player>
+
             <StyledComponents.WrapperFlex>
               <StyledComponents.Button2 onClick={prevStep}>
                 Non
