@@ -5,6 +5,7 @@ import "../App.css";
 import { MainContext } from "../context/MainContext";
 import * as StyledComponents from "../styles/styles.js";
 import { PlacesAutocomplete } from "../components/PlacesAutocomplete";
+import { useNavigate } from "react-router-dom";
 
 const jump = keyframes`
   from{
@@ -128,6 +129,7 @@ const Title = styled.h2`
 `;
 
 function Register() {
+  const navigate = useNavigate();
   const logoMap = {
     fire: import.meta.env.VITE_URL_API + "fire.svg",
     gas: import.meta.env.VITE_URL_API + "gas.svg",
@@ -158,15 +160,16 @@ function Register() {
 
   const [hasErrorForm, setHasErrorForm] = useState(null);
   //new start
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    email: "",
-  });
+  // const [formData, setFormData] = useState({
+  //   username: "",
+  //   password: "",
+  //   email: "",
+  // });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
+
   const handleSelectIncident = (item) => {
     const objetExiste = selectedIncident.some(function (objet) {
       return objet.id === item.id;

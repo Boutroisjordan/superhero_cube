@@ -5,13 +5,14 @@ import CustomMap from "../components/CustomMap";
 import { MainContext } from "../context/MainContext";
 import FormDeclaration from "../components/FormDeclaration";
 
+
 const libraries = ["places"];
 const options = {
   googleMapsApiKey: import.meta.env.VITE_API_KEY,
   libraries,
 };
 
-function PageMap() {
+function PageMap({ isLoaded }) {
   const { isAuthenticated } = useContext(MainContext);
   const [openDecla, setOpenDecla] = useState(false);
   const [addDecla, setAddDecla] = useState(null);
@@ -20,8 +21,6 @@ function PageMap() {
     setAddDecla(decla);
     console.log("Tu recois les cords: ", decla);
   };
-
-  const { isLoaded } = useLoadScript(options);
 
   if (!isLoaded) return <div>Loading ...</div>;
   return (
