@@ -133,9 +133,6 @@ export default function FormDeclaration(props) {
 
   const handleSelectIncidentType = (e) => {
     setSelectedIncident(e.target.value);
-
-    // setSelectedIncident(item);
-    // console.log("ITEMMMMMMMMMM: ", item);
   };
 
   const handlefetchIncidents = async () => {
@@ -268,15 +265,6 @@ export default function FormDeclaration(props) {
     }
   };
 
-  // if (!openDecla) {
-  //   return (
-
-  //   );
-  // } else {
-  //   return (
-
-  //   );
-  // }
 
   return (
     <StyledComponents.ResizeDiv>
@@ -294,11 +282,7 @@ export default function FormDeclaration(props) {
             X
           </StyledComponents.CloseButton>
           <StyledComponents.Form>{renderStep()}</StyledComponents.Form>
-          {/* {selected.lat ?? ""}
-          <br></br>
-          {selected.lng ?? ""} */}
         </StyledComponents.Wrapper>
-        // <DivAjout >hey ho</DivAjout>
       )}
     </StyledComponents.ResizeDiv>
   );

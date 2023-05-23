@@ -17,13 +17,7 @@ const RequestPdf = (params = { token: false }) => {
   });
 };
 
-const RequestAPI = (
-  params = {
-    file: false,
-    token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJyb2xlIjoiQ3VzdG9tZXIiLCJpYXQiOjE2ODQyODM1NDIsImV4cCI6MTY4NDM2OTk0Mn0.HFyu94bKL35hhgULnkGd0xuQ8m0QTCCyob1NP9C1eBY",
-  }
-) => {
+const RequestAPI = (params = { file: false, token: false }) => {
   return axios.create({
     baseURL: API_URL,
     headers: params.token

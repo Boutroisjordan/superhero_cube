@@ -6,4 +6,7 @@ export class updateIncidentDto {
   @ApiProperty({example: "Nom de l'incident"})
   name: string;
 
+  @ApiProperty({ example: "Nom complet" })
+  realName: string;
+
 }

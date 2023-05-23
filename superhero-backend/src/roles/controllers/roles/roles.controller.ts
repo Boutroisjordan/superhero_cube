@@ -46,6 +46,5 @@ export class RolesController {
   async remove(@Param('id', ParseIntPipe) id: number) {
     // this.superheroService.
     await this.roleService.deleteRole(id);
-
   }
 }

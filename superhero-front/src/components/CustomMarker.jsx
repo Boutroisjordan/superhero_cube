@@ -7,29 +7,19 @@ import {
   InfoWindowF,
 } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
-import flameLogo from "../assets/fire-2.svg";
-// import braquageLogo from "../assets/braquage.svg";
-import braquageLogo from "../assets/braquage-2.svg";
-import carLogo from "../assets/car.svg";
-import prisonLogo from "../assets/prison-2.svg";
-import planeLogo from "../assets/plane-2.svg";
-import snakeLogo from "../assets/snake-2.svg";
-import landslideLogo from "../assets/lands.svg";
-import manifLogo from "../assets/manif-2.svg";
-import floodLogo from "../assets/floood.svg";
-import gasLogo from "../assets/gaz.svg";
+
 
 const logoMap = {
-  fire: flameLogo,
-  gas: gasLogo,
-  car: carLogo,
-  plane: planeLogo,
-  prison: prisonLogo,
-  snake: snakeLogo,
-  landslide: landslideLogo,
-  manif: manifLogo,
-  flood: floodLogo,
-  braquage: braquageLogo,
+  fire: import.meta.env.VITE_URL_API + "fire_marker.svg",
+  gas: import.meta.env.VITE_URL_API + "gas_marker.svg",
+  car: import.meta.env.VITE_URL_API + "car_marker.svg",
+  plane: import.meta.env.VITE_URL_API + "plane_marker.svg",
+  prison: import.meta.env.VITE_URL_API + "prison_marker.svg",
+  snake: import.meta.env.VITE_URL_API + "snake_marker.svg",
+  landslide: import.meta.env.VITE_URL_API + "landslide_marker.svg",
+  manif: import.meta.env.VITE_URL_API + "manif_marker.svg",
+  flood: import.meta.env.VITE_URL_API + "flood_marker.svg",
+  braquage: import.meta.env.VITE_URL_API + "braquage_marker.svg",
 };
 
 export default function CustomMarker(props) {
@@ -43,6 +33,7 @@ export default function CustomMarker(props) {
     console.log("coucou lolo", e);
     handleOpenWindowInfo();
   };
+
   const handleOpenWindowInfo = () => {
     setInfoWindowOpen(true);
   };

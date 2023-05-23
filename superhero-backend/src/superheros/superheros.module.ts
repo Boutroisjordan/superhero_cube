@@ -8,7 +8,8 @@ import { Incident } from 'src/typeorm/entities/Incident.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Superhero, Incident]),
+    TypeOrmModule.forFeature([Superhero]),
+    TypeOrmModule.forFeature([Incident]),
     RouterModule.register([
       {
         path: 'superhero'

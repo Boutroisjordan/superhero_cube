@@ -6,9 +6,10 @@ import { MainContext } from "../context/MainContext";
 import { useNavigate } from "react-router-dom";
 
 // import SuperHeroLogo from "../assets/icon-sphero.png";
-import LightLogo from "../assets/light.png";
+import LightLogo from "../assets/elcair.png";
 import SuperHeroLogo from "../assets/superhero-only2.png";
 import MairieLogo from "../assets/mairie.png";
+import Rain from "../assets/rain.webp";
 
 const WrapperFlex = styled.section`
   display: flex;
@@ -58,11 +59,28 @@ export default function Navbar() {
             className="icon-navbar-register superhero"
             style={{ width: "50%" }}
           >
-            <img style={{ width: "50px" }} src={LightLogo} />
-            <img style={{ width: "50px" }} src={SuperHeroLogo} />
+            {/* <img className="rain" src={Rain} /> */}
+            <Link
+              to="register"
+              className="rain"
+              style={{
+                backgroundImage: `url(${Rain})`,
+              }}
+            ></Link>
+            <img className="eclair" style={{ width: "50px" }} src={LightLogo} />
+            <img
+              className="superhero-img"
+              style={{ width: "50px" }}
+              src={SuperHeroLogo}
+            />
           </div>
           <div className="icon-navbar-register town" style={{ width: "50%" }}>
-            <img style={{ width: "50px" }} src={MairieLogo} />
+            <div className="soleil-bg"></div>
+            <img
+              className="town-img"
+              style={{ width: "50px" }}
+              src={MairieLogo}
+            />
           </div>
         </div>
 

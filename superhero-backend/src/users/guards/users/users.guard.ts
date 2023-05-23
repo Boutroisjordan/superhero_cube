@@ -16,6 +16,7 @@ export class UsersGuard implements CanActivate {
     if (!requiredRoles) {
       return true; // Si aucun rôle n'est spécifié pour cette route, l'accès est autorisé
     }
+    
     console.log("role requis: ", requiredRoles);
 
     const request = context.switchToHttp().getRequest();

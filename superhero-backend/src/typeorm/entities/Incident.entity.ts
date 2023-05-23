@@ -12,6 +12,12 @@ export class Incident {
   @Column({ unique: true})
   name: string;
 
+  @Column()
+  realName: string;
+
+  // @Column()
+  // path: string;
+
   @ManyToMany(() => Superhero, superhero => superhero.incidents)
   @JoinTable()
   superheros: Superhero[];

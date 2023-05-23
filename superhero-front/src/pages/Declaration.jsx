@@ -135,13 +135,13 @@ const Title = styled.h2`
   text-align: center;
 `;
 
-const libraries = ["places"];
 
 // const { isLoaded } = useLoadScript({
-//   googleMapsApiKey: import.meta.env.VITE_API_KEY,
-//   libraries,
-// });
-
+  //   googleMapsApiKey: import.meta.env.VITE_API_KEY,
+  //   libraries,
+  // });
+  
+  const libraries = ["places"];
 const options = {
   googleMapsApiKey: import.meta.env.VITE_API_KEY,
   libraries,
@@ -205,6 +205,7 @@ function Declaration() {
 
   const [value, setValue] = useState(false);
   const [selected, setSelected] = useState(false);
+  <PlacesAutocomplete setSelected={setSelected} />
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 

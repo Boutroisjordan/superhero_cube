@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useContext } from "react";
 
 import "./App.css";
 import CustomMap from "./components/CustomMap";
@@ -11,6 +11,7 @@ import RedirectRouter from "./components/RedirectRouter";
 import { MainContextProvider } from "./context/MainContext";
 
 function App() {
+
   return (
     <>
       <MainContextProvider>

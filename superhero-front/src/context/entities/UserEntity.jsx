@@ -9,22 +9,7 @@ export const UserEntity = () => {
       var result = await fetchAPI(`/users/`);
       return result;
     },
-    // postLogin: async (email) => {
-    //   var result = await fetchAPI(`/users/login`);
-    //   return result;
-    // },
-    //     getAuthorize: async (data) => {
-    //       console.log(data);
 
-    //         var result = await fetchAPI(`/users/authorize`,
-    //         {"email": data.email,
-    //          "password": data.password});
-    //         return result;
-    //     },
-    //     reset_pass: async (data) => {
-    //       var result = await postAPI(`/users/reset_pass`, data);
-    //       return result;
-    //     },
     postLogin: async (data, params) => {
       var result = await postAPI(`/users/login`, data, params);
       console.log("le post dans entité: ", data, params);

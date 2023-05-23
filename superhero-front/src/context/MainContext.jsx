@@ -2,6 +2,7 @@
 import React, { createContext, useState, useEffect, useMemo } from "react";
 import { UserEntity } from "./Entities/UserEntity";
 import { DeclarationEntity } from "./entities/DeclarationEntity";
+import { SuperheroEntity } from "./entities/SuperheroEntity";
 import { useCookies } from "react-cookie";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -65,6 +66,7 @@ export const MainContextProvider = ({ children }) => {
         ...providerUsername,
         ...DeclarationEntity(),
         ...IncidentTypeEntity(),
+        ...SuperheroEntity(),
         ...UserEntity(),
         setToken,
         isAuthenticated,

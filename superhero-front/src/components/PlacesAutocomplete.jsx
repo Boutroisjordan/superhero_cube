@@ -52,7 +52,7 @@ export const PlacesAutocomplete = ({ setSelected }) => {
         //   }
         // }}
         disabled={!ready}
-        onCli
+
         placeholder="search address"
       />
       {/* <div className="options-container"> */}

@@ -12,9 +12,16 @@ import { UsersModule } from './users/users.module';
 import { User } from './typeorm/entities/User.entity';
 import { Role } from './typeorm/entities/Role.entity';
 import { RolesModule } from './roles/roles.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      // rootPath: join(__dirname, 'assets'),
+    }),
+    TypeOrmModule.forRoot({
     type: 'mariadb',
     host: 'localhost',
     port: 3306,
@@ -23,6 +30,7 @@ import { RolesModule } from './roles/roles.module';
     database: "superhero",
     entities: [Superhero, Incident, Declaration, User, Role],
     synchronize: true,
+
   }), SuperherosModule, IncidentsModule, DeclarationsModule, UsersModule, RolesModule],
   controllers: [AppController],
   providers: [AppService],
