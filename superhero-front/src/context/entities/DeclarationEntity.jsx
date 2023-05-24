@@ -28,7 +28,7 @@ export const DeclarationEntity = () => {
     //     },
     postDeclaration: async (data, params) => {
       var result = await postAPI(`/declarations`, data, params);
-      console.log("le post dans entité: ", data, params);
+      // console.log("le post dans entité: ", data, params);
       return result;
     },
     // postLogin: (data) => postAPI(`/users/login`, data).then((res) => res),

@@ -20,6 +20,7 @@ const logoMap = {
   manif: import.meta.env.VITE_URL_API + "manif_marker.svg",
   flood: import.meta.env.VITE_URL_API + "flood_marker.svg",
   braquage: import.meta.env.VITE_URL_API + "braquage_marker.svg",
+  superhero: import.meta.env.VITE_URL_API + "superhero_marker.svg",
 };
 
 export default function CustomMarker(props) {
@@ -68,8 +69,21 @@ export default function CustomMarker(props) {
             onCloseClick={() => setInfoWindowOpen(false)}
           >
             <>
-              <h1>{title}</h1>
-              <p>{details}</p>
+              {/* {props.type != "superhero" ? ( */}
+              <>
+                <h1>{title}</h1>
+                <p>
+                  {props.type === "superhero"
+                    ? `Distance ${details} km`
+                    : details}
+                </p>
+              </>
+              {/* ) :
+               <>
+               <h1>{title}</h1>
+                  <p>{details}</p>
+              </> */}
+              {/* } */}
             </>
             {/* <h1>lololo</h1> */}
           </InfoWindowF>
@@ -78,23 +92,3 @@ export default function CustomMarker(props) {
     </>
   );
 }
-
-// Incendie /OK
-
-// Accident routier /OK
-
-// Accident fluvial /OK
-
-// Accident aérien /OK
-
-// Eboulement /ok
-
-// Invasion de serpent / ok
-
-// Fuite de gaz /ok
-
-// Manifestation / a transformer en svg
-
-// Braquage / a  transformer en svg
-
-// Evasion d’un prisonnier  / transformer

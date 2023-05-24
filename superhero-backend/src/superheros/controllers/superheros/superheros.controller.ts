@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import {ApiParam, ApiTags } from '@nestjs/swagger';
+import { createDeclarationDto } from 'src/declarations/dtos/CreateDeclaration.dto';
 import { createSuperheroDto } from 'src/superheros/dtos/CreateSuperhero.dto';
 import { updateSuperheroDto } from 'src/superheros/dtos/UpdateSuperhero.dto';
 import { SuperherosService } from 'src/superheros/services/superheros/superheros.service';
@@ -13,6 +14,11 @@ export class SuperherosController {
   @Get()
   async getSuperheros() {
     const superheros = await this.superheroService.fetchSuperheros();
+    return superheros;
+  }
+  @Get("/nearest/:id")
+  async getNearestSuperheros(@Param('id', ParseIntPipe) id: number) {
+    const superheros = await this.superheroService.fetchNearestSuperheros(id);
     return superheros;
   }
 

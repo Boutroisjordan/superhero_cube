@@ -13,25 +13,44 @@ const options = {
 };
 
 function PageMap({ isLoaded }) {
-  const { isAuthenticated } = useContext(MainContext);
+  const { isAuthenticated, fetchNearestSuperheros } = useContext(MainContext);
   const [openDecla, setOpenDecla] = useState(false);
   const [addDecla, setAddDecla] = useState(null);
   const [addSearchCicle, setAddSearchCircle] = useState(null);
+  const [nearestSuperheros, setNearestSuperheros] = useState([]);
+  const [selectedMarker, setSelectedMarker] = useState(null);
 
   const handleSetDecla = (decla) => {
     setAddDecla(decla);
     console.log("Tu recois les cords: ", decla);
   };
+  const handleSelectedMarker = (item) => {
+    setSelectedMarker(item);
+  };
 
-  const handleSearchHero = (item) => {
+  const handleSearchHero = async (item) => {
     setAddSearchCircle(item);
-    console.log("Tu recois search: ", item);
+    if (item.id) {
+      const result = await fetchNearestSuperheros(item.id);
+      console.log("le result superhero: ", result);
+      setNearestSuperheros(result.data);
+      setSelectedMarker(item);
+      // setNearestSuperheros((nearestSuperheros) => [...nearestSuperheros, result]);
+    } else {
+      setNearestSuperheros([]);
+    }
+    // console.log("Tu recois search: ", item);
   };
 
   if (!isLoaded) return <div>Loading ...</div>;
   return (
     <>
-      <CustomMap selected={addDecla} circle={addSearchCicle} />
+      <CustomMap
+        selected={addDecla}
+        circle={addSearchCicle}
+        superheros={nearestSuperheros}
+        selectedMarker={selectedMarker}
+      />
       {isAuthenticated() ? <FormDeclaration cbDecla={handleSetDecla} /> : null}
       <Modal search={handleSearchHero} />
     </>

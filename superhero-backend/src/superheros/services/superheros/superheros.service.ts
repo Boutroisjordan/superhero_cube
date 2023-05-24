@@ -5,6 +5,9 @@ import { updateSuperheroDto } from 'src/superheros/dtos/UpdateSuperhero.dto';
 import { Superhero } from 'src/typeorm/entities/Superhero.entity';
 import { Incident } from 'src/typeorm/entities/Incident.entity';
 import { In, Repository } from 'typeorm';
+import { calculateDistance } from 'src/utils/calculateDistance';
+import { createDeclarationDto } from 'src/declarations/dtos/CreateDeclaration.dto';
+import { Declaration } from 'src/typeorm/entities/Declaration.entity';
 
 @Injectable()
 export class SuperherosService {
@@ -12,6 +15,7 @@ export class SuperherosService {
   constructor(
     @InjectRepository(Superhero) private superheroRepository: Repository<Superhero>,
     @InjectRepository(Incident) private incidentRepository: Repository<Incident>,
+    @InjectRepository(Declaration) private declarationRepository: Repository<Declaration>,
   ) {
 
   }
@@ -60,8 +64,35 @@ export class SuperherosService {
     return superhero;
   }
 
-
   deleteSuperhero(id: number) {
     return this.superheroRepository.delete(id);
+  }
+
+  async fetchNearestSuperheros(id: number) {
+
+    const declaration = await this.declarationRepository.findOne({
+      where: {
+        id: id,
+      },
+      relations: ["incident"]
+    });
+    const nearestSuperheros = await this.superheroRepository.find({ relations: ["incidents"] });
+    const superherosArray = [];
+
+    for (const superhero of nearestSuperheros) {
+
+      const distance = calculateDistance(superhero.latitude, superhero.longitude, declaration.lat, declaration.lng);
+      console.log("superhero nearest: ", distance, " name: ", superhero.name, " ", distance < 0)
+
+      console.log(distance);
+      if (distance < 50) {
+        // superherosArray.push(superhero);
+        const hasIncidentWithName = superhero.incidents.some((incident: Incident) => incident.name === 'braquage');
+        if (hasIncidentWithName) superherosArray.push({ "superhero": superhero, "distance": Math.round(distance) });
+      }
+
+    }
+
+    return superherosArray;
   }
 }

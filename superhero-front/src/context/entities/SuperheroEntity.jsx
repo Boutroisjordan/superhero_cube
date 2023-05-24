@@ -10,6 +10,11 @@ export const SuperheroEntity = () => {
       setSuperheros(result.data);
       return result;
     },
+    fetchNearestSuperheros: async (id) => {
+      var result = await fetchAPI(`/superheros/nearest/${id}`);
+      setSuperheros(result.data);
+      return result;
+    },
 
     postSuperhero: async (data, params) => {
       var result = await postAPI(`/superheros`, data, params);
