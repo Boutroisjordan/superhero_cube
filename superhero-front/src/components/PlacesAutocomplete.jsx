@@ -5,7 +5,7 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import * as StyledComponents from "../styles/styles.js";
 
-export const PlacesAutocomplete = ({ setSelected }) => {
+export const PlacesAutocomplete = ({ placeholder, setSelected, getName }) => {
   const {
     ready,
     value,
@@ -23,6 +23,13 @@ export const PlacesAutocomplete = ({ setSelected }) => {
     const result = await getGeocode({ address });
     const { lat, lng } = await getLatLng(result[0]);
     setSelected({ lat, lng });
+    console.log("lalala valeuuuuuuur: ", value);
+    console.log("lalala valeuuuuuuur2222: ", result[0].address_components[0]);
+    console.log("lalala valeuuuuuuur2222: ");
+
+    if (getName) {
+      getName(result[0].address_components[0].long_name);
+    }
     setOpen(false);
   };
 
@@ -34,26 +41,13 @@ export const PlacesAutocomplete = ({ setSelected }) => {
     }
   }, [data]);
 
-  const handleOpen = () => {};
-
   return (
     <>
       <StyledComponents.Input
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        // onFocus={() => setOpen(true)}
-        // onInput={() => {
-        //   console.log("any suggestion ?: ", data);
-        //   console.log("any suggestion ?: ", status);
-        //   if (data.length > 0) {
-        //     setOpen(true);
-        //   } else {
-        //     setOpen(false);
-        //   }
-        // }}
         disabled={!ready}
-
-        placeholder="search address"
+        placeholder={placeholder ?? "Adresse"}
       />
       {/* <div className="options-container"> */}
       <StyledComponents.WrapperOptions className={open ? "open" : ""}>

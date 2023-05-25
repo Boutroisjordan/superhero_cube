@@ -19,19 +19,11 @@ export const UserEntity = () => {
       console.log("le post dans entité: ", data, params);
       return result;
     },
+
     postSignIn: async (data, params) => {
       var result = await postAPI(`/users`, data, params);
       console.log("le post dans entité: ", data, params);
       return result;
     },
-    // postLogin: (data) => postAPI(`/users/login`, data).then((res) => res),
-    //     putUser: async (data) => {
-    //       var result = await putAPI(`/users/update`, data)
-    //       return result;
-    //   },
-    //     deleteUser: async (data) => {
-    //       var result = await deleteAPI(`/users/delete`, data)
-    //       return result;
-    // },
   };
 };

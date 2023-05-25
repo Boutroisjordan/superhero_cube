@@ -34,7 +34,7 @@ const Wrapper = styled.section`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  height: 100%;
+  height: calc(100% - 80px);
   width: 100%;
   gap: 0.5rem;
 `;
@@ -147,68 +147,59 @@ function RegisterUsers() {
     fetchIncidentTypes,
     fetchDeclarations,
     postDeclaration,
+    postSignIn,
     user,
   } = useContext(MainContext);
   const [step, setStep] = useState(1);
 
   const [coords, setCoords] = useState(false);
   const [name, setName] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [incidents, setIncidents] = useState(null);
-  const [selectedIncident, setSelectedIncident] = useState([]);
+  const [email, setEmail] = useState(null);
 
+  const [password, setPassword] = useState(null);
+  const [passwordRepeat, setPasswordRepeat] = useState(null);
+
+  // const [hasErrorForm, setHasErrorForm] = useState(null);
   const [hasErrorForm, setHasErrorForm] = useState(null);
-  //new start
-  // const [formData, setFormData] = useState({
-  //   username: "",
-  //   password: "",
-  //   email: "",
-  // });
-
-  // const handleChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
-
-  const handleSelectIncident = (item) => {
-    const objetExiste = selectedIncident.some(function (objet) {
-      return objet.id === item.id;
-    });
-
-    if (objetExiste) {
-      setSelectedIncident((prevState) =>
-        prevState.filter((incident) => incident.id !== item.id)
-      );
-    }
-
-    if (!objetExiste && selectedIncident.length < 3) {
-      let copy = selectedIncident;
-      setSelectedIncident((incidents) => [...incidents, item]);
-    }
-    console.log("lalalalalalaaaa: ", selectedIncident);
-  };
-
-  const handleIsInSelected = (item) => {
-    const objetExiste = selectedIncident.some(function (objet) {
-      return objet.id === item.id;
-    });
-
-    return objetExiste;
-  };
+  const [placesValue, setplacesValue] = useState(null);
 
   const nextStep = (e) => {
     e.preventDefault();
-    if (step === 1 && handleCheckPhone(phone)) {
-      setStep(step + 1);
-      console.log("cst okkkk pour moi,phone ");
-    }
+    // setStep(step + 1);
 
-    if (step === 2) {
+    if (step === 1 && handleMapLoad(placesValue) === false) {
+      setHasErrorForm("Le nom doit correspondre à une ville");
+    } else if (step === 2 && password != passwordRepeat) {
+      setHasErrorForm("Les mots de passe ne sont pas identiques");
+    } else {
       setStep(step + 1);
     }
   };
 
   const prevStep = () => {
     setStep(step - 1);
+  };
+
+  const handleMapLoad = (city) => {
+    // Vérifier le nom de la ville lorsque la carte est chargée
+    const cityName = city; // Remplacez par le nom de la ville que vous souhaitez vérifier
+
+    const geocoder = new window.google.maps.Geocoder();
+    return geocoder.geocode({ address: cityName }, (results, status) => {
+      if (status === "OK") {
+        if (results[0].formatted_address.includes(cityName)) {
+          console.log("Le nom correspond à une ville valide");
+          setName(cityName);
+          return true;
+        } else {
+          console.log("Le nom ne correspond pas à une ville valide");
+          return false;
+        }
+      } else {
+        console.log("Erreur de géocodage :", status);
+        return false;
+      }
+    });
   };
 
   const handleCheckPhone = (phone) => {
@@ -221,20 +212,20 @@ function RegisterUsers() {
       console.log("Numéro de téléphone invalide !");
       return false;
     }
+
+    //check if it's a valid city
+    handleMapLoad();
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let incidentNames = [];
-    selectedIncident.forEach((incident) => {
-      incidentNames.push({ name: incident.name });
-    }, []);
 
     let data = {
-      phone: phone,
       name: name,
       latitude: coords.lat,
       longitude: coords.lng,
-      incidents: incidentNames,
+      email: email,
+      password: password,
     };
     let params = {
       file: false,
@@ -242,21 +233,17 @@ function RegisterUsers() {
     };
 
     try {
-      const response = await postSuperhero(data, params);
+      const response = await postSignIn(data, params);
       if (response.status === 200 || response.status === 201) {
         navigate("/");
       } else {
         // throw new Error("Erreur HTTP ");
+        setHasErrorForm("Error sign in");
         console.log("response: ", response);
       }
     } catch (e) {
-      console.log("l'erruer ma gueule: ", e);
-      // setHasError("Bad Creds");
+      console.log("erreur signIn ", e);
     }
-  };
-
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
   };
 
   const handleDisabledOption = (item) => {
@@ -271,47 +258,36 @@ function RegisterUsers() {
     return false;
   };
 
-  const handlefetchIncidents = async () => {
-    const result = await fetchIncidentTypes();
-    setIncidents(result.data);
-  };
+  useEffect(() => {
+    setHasErrorForm(null);
+  }, [name, email, password]);
 
   useEffect(() => {
-    handlefetchIncidents();
-  }, []);
+    console.log("le name il chnage: ", name);
+  }, [name]);
+
+  const handleGetPlacesName = (placesName) => {
+    setplacesValue(placesName);
+  };
 
   const renderStep = () => {
     switch (step) {
       case 1:
         return (
           <Wrapper>
-            <Input
-              type="text"
-              name="name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-                setHasErrorForm("");
-              }}
-              placeholder="Nom de la mairie *"
+            {placesValue ?? "No"}
+            <PlacesAutocomplete
+              getName={handleGetPlacesName}
+              setSelected={setCoords}
+              placeholder="Nom de la ville *"
             />
-            <p
-              style={{
-                color: "red",
-                margin: 0,
-                fontSize: "0.65rem",
-                textAlign: "left",
-              }}
-            >
-              {" "}
-              {/* {hasErrorForm ?? null} */}
-            </p>
+
             <Input
               type="email"
               name="email"
-              value={phone}
+              value={email}
               onChange={(e) => {
-                setPhone(e.target.value);
+                setEmail(e.target.value);
                 // setHasErrorForm("");
               }}
               placeholder="Email *"
@@ -322,44 +298,29 @@ function RegisterUsers() {
         break;
       case 2:
         return (
-          <StyledComponents.WrapperForm>
-            Choix multiple:
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
+          <Wrapper>
+            <Input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setHasErrorForm("");
               }}
-            >
-              {incidents
-                ? incidents.map((item) => {
-                    return (
-                      <div
-                        key={item.id}
-                        className={`option-type ${
-                          handleIsInSelected(item) === true ? "selected" : ""
-                        } ${
-                          handleDisabledOption(item) === true ? "disabled" : ""
-                        }‘`}
-                        onClick={() => handleSelectIncident(item)}
-                      >
-                        <img width="100px" src={logoMap[item.name]} />
-                      </div>
-                    );
-                  })
-                : null}
-              list selected:
-              {selectedIncident.length > 0
-                ? selectedIncident.map((item) => {
-                    return (
-                      <div>
-                        <p>{item.name}</p>
-                        allo
-                      </div>
-                    );
-                  })
-                : null}
-            </div>
+              placeholder="Mot de passe *"
+            />
+
+            <Input
+              type="password"
+              name="passwordrepeat"
+              value={passwordRepeat}
+              onChange={(e) => {
+                setPasswordRepeat(e.target.value);
+                setHasErrorForm("");
+              }}
+              placeholder="Confirmer mot de passe *"
+            />
+
             <StyledComponents.WrapperFlex>
               <StyledComponents.Button2 onClick={prevStep}>
                 Back
@@ -368,26 +329,35 @@ function RegisterUsers() {
                 Next
               </StyledComponents.Button2>
             </StyledComponents.WrapperFlex>
-          </StyledComponents.WrapperForm>
+          </Wrapper>
         );
         break;
       case 3:
         return (
-          <StyledComponents.WrapperForm>
-            <PlacesAutocomplete setSelected={setCoords} />
+          <Wrapper>
+            <div style={{ textAlign: "le" }}>
+              <h2>Confirmez-vous les informations ?</h2>
+              <p>Nom Mairie/Ville: {name}</p>
+              <p>Latitude: {coords.lat}</p>
+              <p>Longitude: {coords.lng}</p>
+              <p>Email: {email}</p>
+              <p>Mot de passe: {password}</p>
+            </div>
+
             <StyledComponents.WrapperFlex>
               <StyledComponents.Button2 onClick={prevStep}>
                 Back
               </StyledComponents.Button2>
-              <StyledComponents.Button2 onClick={(e) => handleSubmit(e)}>
-                Next
+              <StyledComponents.Button2
+                style={{ flex: "1" }}
+                onClick={handleSubmit}
+              >
+                Enregistrer
               </StyledComponents.Button2>
             </StyledComponents.WrapperFlex>
-          </StyledComponents.WrapperForm>
+          </Wrapper>
         );
-
         break;
-
       default:
         return null;
     }
@@ -399,6 +369,24 @@ function RegisterUsers() {
       <Wrapper style={{ background: "#FDF9F3" }}>
         <Form>{renderStep()}</Form>
       </Wrapper>
+
+      {hasErrorForm && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: "10px",
+            left: "10px",
+            background: "#ffffff",
+            padding: "12px 24px",
+            textAlign: "left",
+            borderRadius: "12px",
+            boxShadow: "0px 10px 15px -3px rgba(0,0,0,0.1)",
+          }}
+        >
+          <h2 style={{ fontSize: "16px", color: "red" }}>Error</h2>
+          <p>{hasErrorForm}</p>
+        </div>
+      )}
     </>
   );
 }

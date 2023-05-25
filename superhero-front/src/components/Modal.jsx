@@ -142,7 +142,12 @@ function Modal({ search }) {
       <ModalContent>
         <ModalHeader>
           <ModalTitle>Incidents</ModalTitle>
-          <p onClick={handleOpen}>arrow</p>
+          <p
+            style={{ transform: open ? "rotate(-90deg)" : "rotate(90deg)" }}
+            onClick={handleOpen}
+          >
+            &lt;
+          </p>
         </ModalHeader>
         <ModalBody className={open ? "open" : ""}>
           {declarations.map((item) => {

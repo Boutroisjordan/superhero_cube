@@ -181,9 +181,8 @@ function Login() {
     <>
       {/* Le user: {user} */}
       {/* <GlobalStyle /> */}
-      <Wrapper>
+      <Wrapper style={{ background: "#FDF9F3" }}>
         <Form>
-          Email: {email}
           <Input
             type="email"
             name="email"
@@ -191,7 +190,7 @@ function Login() {
             onChange={(e) => handleChangeEmail(e)}
             placeholder="Email"
           />
-          Password: {password}
+
           <Input
             type="password"
             name="password"

@@ -224,9 +224,10 @@ export const ResizeDiv = styled.div`
 
 export const WrapperOptions = styled.div`
   position: absolute;
-  top: 45%;
-  right: 0;
-  left: 0;
+  top: 40%;
+  // right: 0;
+  // left: 0;
+  width: 100%
   height: 0px;
   overflow-y: scroll;
   // background: #ffffff;
