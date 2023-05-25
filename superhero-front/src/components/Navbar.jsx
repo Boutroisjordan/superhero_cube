@@ -75,6 +75,7 @@ export default function Navbar() {
             />
           </div>
           <div className="icon-navbar-register town" style={{ width: "50%" }}>
+            <Link to="register-user" className="rain"></Link>
             <div className="soleil-bg"></div>
             <img
               className="town-img"

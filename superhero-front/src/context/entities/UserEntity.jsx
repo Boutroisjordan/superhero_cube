@@ -9,6 +9,10 @@ export const UserEntity = () => {
       var result = await fetchAPI(`/users/`);
       return result;
     },
+    fetchUserInfo: async (params) => {
+      var result = await fetchAPI(`/users/infos`, params);
+      return result;
+    },
 
     postLogin: async (data, params) => {
       var result = await postAPI(`/users/login`, data, params);

@@ -135,6 +135,8 @@ function CustomMap(props) {
                 key={hero.superhero.id}
                 title={hero.superhero.name}
                 details={hero.distance}
+                phone={hero.superhero.phone}
+                incidents={hero.superhero.incidents}
               />
             );
           })}

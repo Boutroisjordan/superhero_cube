@@ -127,7 +127,7 @@ const Title = styled.h2`
   text-align: center;
 `;
 
-function Register() {
+function RegisterUsers() {
   const navigate = useNavigate();
   const logoMap = {
     fire: import.meta.env.VITE_URL_API + "fire.svg",
@@ -293,7 +293,7 @@ function Register() {
                 setName(e.target.value);
                 setHasErrorForm("");
               }}
-              placeholder="Nom de superhéros *"
+              placeholder="Nom de la mairie *"
             />
             <p
               style={{
@@ -307,14 +307,14 @@ function Register() {
               {/* {hasErrorForm ?? null} */}
             </p>
             <Input
-              type="text"
-              name="phone"
+              type="email"
+              name="email"
               value={phone}
               onChange={(e) => {
                 setPhone(e.target.value);
                 // setHasErrorForm("");
               }}
-              placeholder="Téléphone *"
+              placeholder="Email *"
             />
             <Button onClick={nextStep}>Next</Button>
           </Wrapper>
@@ -403,4 +403,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default RegisterUsers;

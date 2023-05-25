@@ -29,6 +29,8 @@ export default function CustomMarker(props) {
   const [infoWindowOpen, setInfoWindowOpen] = useState(false);
   const [details, setDetails] = useState(props.details);
   const [title, setTitle] = useState(props.title);
+  const [phone, setPhone] = useState(props.phone ?? null);
+  const [incidents, setIncidents] = useState(props.incidents ?? null);
 
   const handleMarkerClick = (e) => {
     console.log("coucou lolo", e);
@@ -77,9 +79,20 @@ export default function CustomMarker(props) {
                     ? `Distance ${details} km`
                     : details}
                 </p>
+
+                <p>
+                  {props.type === "superhero" &&
+                    `Numéro de téléphone: ${phone}`}
+                </p>
+                <div>
+                  {incidents != null &&
+                    incidents.map((item) => {
+                      return <p>{item.realName}</p>;
+                    })}
+                </div>
               </>
               {/* ) :
-               <>
+               <
                <h1>{title}</h1>
                   <p>{details}</p>
               </> */}

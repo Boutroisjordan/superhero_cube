@@ -10,6 +10,7 @@ import Register from "../pages/Register";
 import Declaration from "../pages/Declaration";
 import PrivateRoute from "../utils/PrivateRoute";
 import { useLoadScript } from "@react-google-maps/api";
+import RegisterUsers from "../pages/RegisterUser";
 
 const libraries = ["places"];
 const options = {
@@ -27,6 +28,7 @@ function RedirectRouter() {
           <Route path="/" exact element={<PageMap isLoaded={isLoaded} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/register-user" element={<RegisterUsers />} />
           <Route element={<PrivateRoute />}>
             <Route path="/declaration" element={<Declaration />} />
           </Route>

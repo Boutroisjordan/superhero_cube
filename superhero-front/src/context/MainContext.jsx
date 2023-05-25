@@ -11,6 +11,9 @@ import { IncidentTypeEntity } from "./entities/IncidentType";
 export const MainContext = createContext();
 
 export const MainContextProvider = ({ children }) => {
+  const userEntity = UserEntity();
+  const { fetchUserInfo } = userEntity;
+
   // const {fetchDeclarations} = {...DeclarationEntity()};
   const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
 
@@ -51,11 +54,27 @@ export const MainContextProvider = ({ children }) => {
     return false;
   };
 
+  const handleFetchUserInfos = async (params) => {
+    const resultUserInfos = await fetchUserInfo(params);
+    if (resultUserInfos.status === 200) {
+      setUsername(resultUserInfos.data.name);
+    }
+    console.log("OOOOOOOOOOOOOOOOOOO: ", resultUserInfos);
+  };
+
   useEffect(() => {
     if (cookies["jwt"]) {
       //requête les infos user
       //set le token
       setUser(cookies["jwt"]);
+      let params = {
+        file: false,
+        token: cookies["jwt"],
+      };
+
+      handleFetchUserInfos(params);
+
+      //fetch user infos
     }
   }, []);
 

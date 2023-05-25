@@ -1,17 +1,23 @@
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateRoleDto } from 'src/roles/dtos/CreateRole.dto';
 import { Role } from 'src/typeorm/entities/Role.entity';
 import { User } from 'src/typeorm/entities/User.entity';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
+import { InfosUserDto } from 'src/users/dtos/InfosUser.dto';
 import { LoginUserDto } from 'src/users/dtos/LoginUser.dto';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
+  // jwtService: any;
+
+
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
-    @InjectRepository(Role) private roleRepository: Repository<Role>
+    @InjectRepository(Role) private roleRepository: Repository<Role>,
+    private jwtService: JwtService,
   ) {
 
   }
@@ -19,6 +25,17 @@ export class UsersService {
   async fetchUsers() {
     const users = await this.userRepository.find({ relations: ["role"] });
     return users;
+  }
+
+  async fetchUserInfos(token: string) {
+
+    console.log("token", token)
+
+    const decodedToken = this.jwtService.verify(token); // Décode le jeton JWT
+    const userId = decodedToken.id;
+
+    const user = await this.userRepository.findOneBy({ id: userId });
+    return user;
   }
 
   // async createUser(userDetails: CreateUserDto): Promise<User> {
@@ -35,6 +52,8 @@ export class UsersService {
     console.log("User created")
     return await this.userRepository.save(newUser);
   }
+
+
   // async createSuperhero(superheroDetails: createSuperheroDto) {
   //   const incidents: Incident[] = [];
 
@@ -54,8 +73,9 @@ export class UsersService {
       },
       relations: ["role"]
     });
-    // const findUser = await this.userRepository.findOne();
 
+
+    // const findUser = await this.userRepository.findOne();
     // const declaration = await this.declarationRepository.findOne({
     //   where: {
     //     id: id

@@ -16,7 +16,7 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column({ unique: true })
+  @Column()
   password: string;
 
   @Column({ type: "float" })
@@ -27,7 +27,6 @@ export class User {
 
   @ManyToOne(() => Role, role => role.users)
   role: Role;
-
 
   // @ManyToMany(() => Declaration, declaration => declaration.mairies)
   // // @JoinTable()

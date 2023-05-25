@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Controller, Get, Post, Res, SetMetadata, UseGuards } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Post, Req, Res, SetMetadata, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { UsersService } from 'src/users/services/users/users.service';
 import { CreateUserDto } from 'src/users/dtos/CreateUser.dto';
@@ -6,6 +6,8 @@ import * as bcrypt from 'bcrypt';
 import { LoginUserDto } from 'src/users/dtos/LoginUser.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UsersGuard } from 'src/users/guards/users/users.guard';
+import { InfosUserDto } from 'src/users/dtos/InfosUser.dto';
+import { Request } from 'express';
 
 
 @ApiTags('user')
@@ -24,6 +26,17 @@ export class UsersController {
   @SetMetadata('role', ["admin", "customer"])
   async get() {
     const users = await this.userService.fetchUsers();
+    return users;
+  }
+  @ApiBearerAuth()
+  // @UseGuards(UsersGuard)
+  @Get("/infos")
+  async getUserInfos(@Req() request: Request) {
+
+    const token = request.headers.authorization.replace('bearer ', '')
+
+    console.log("token controller: ", token)
+    const users = await this.userService.fetchUserInfos(token);
     return users;
   }
 
@@ -52,6 +65,7 @@ export class UsersController {
     }
 
     const jwt = await this.jwtService.signAsync({ id: user.id, role: user.role.name })
+
 
     return {
       message: "success",
