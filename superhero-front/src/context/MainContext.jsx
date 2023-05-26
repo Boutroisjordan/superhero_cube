@@ -35,21 +35,16 @@ export const MainContextProvider = ({ children }) => {
     removeCookie("jwt");
     setUser(null);
     providerUser.setUser(null);
-
-    console.log("user: ", user, " cookie: ", cookies["jwt"]);
   };
 
   const isAuthenticated = () => {
     const token = user;
-    console.log("Passe dans auth: ", token);
-    console.log("Passe dans auth user: ", user);
+
     if (token) {
       const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000;
-      console.log("resultat authenticated: ", decodedToken.exp > currentTime);
       return decodedToken.exp > currentTime;
     }
-    console.log("resultat authenticated: ", false);
 
     return false;
   };
@@ -59,7 +54,6 @@ export const MainContextProvider = ({ children }) => {
     if (resultUserInfos.status === 200) {
       setUsername(resultUserInfos.data.name);
     }
-    console.log("OOOOOOOOOOOOOOOOOOO: ", resultUserInfos);
   };
 
   useEffect(() => {

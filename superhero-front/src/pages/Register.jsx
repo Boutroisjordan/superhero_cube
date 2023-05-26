@@ -184,7 +184,6 @@ function Register() {
       let copy = selectedIncident;
       setSelectedIncident((incidents) => [...incidents, item]);
     }
-    console.log("lalalalalalaaaa: ", selectedIncident);
   };
 
   const handleIsInSelected = (item) => {
@@ -199,7 +198,6 @@ function Register() {
     e.preventDefault();
     if (step === 1 && handleCheckPhone(phone)) {
       setStep(step + 1);
-      console.log("cst okkkk pour moi,phone ");
     }
 
     if (step === 2) {
@@ -215,10 +213,8 @@ function Register() {
     const regex = /^\d{10}$/;
 
     if (regex.test(phone)) {
-      console.log("Numéro de téléphone valide !");
       return true;
     } else {
-      console.log("Numéro de téléphone invalide !");
       return false;
     }
   };
@@ -247,7 +243,6 @@ function Register() {
         navigate("/");
       } else {
         // throw new Error("Erreur HTTP ");
-        console.log("response: ", response);
       }
     } catch (e) {
       console.log("l'erruer ma gueule: ", e);
@@ -348,7 +343,7 @@ function Register() {
                     );
                   })
                 : null}
-              list selected:
+              {/* list selected:
               {selectedIncident.length > 0
                 ? selectedIncident.map((item) => {
                     return (
@@ -358,7 +353,7 @@ function Register() {
                       </div>
                     );
                   })
-                : null}
+                : null} */}
             </div>
             <StyledComponents.WrapperFlex>
               <StyledComponents.Button2 onClick={prevStep}>

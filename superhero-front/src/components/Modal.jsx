@@ -110,7 +110,7 @@ function Modal({ search }) {
 
   useEffect(() => {
     handleFetchData();
-    console.log(declarations, " declarations MODALLL");
+
   }, []);
 
   if (!declarations)

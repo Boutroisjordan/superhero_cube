@@ -35,7 +35,7 @@ export class UsersController {
 
     const token = request.headers.authorization.replace('bearer ', '')
 
-    console.log("token controller: ", token)
+    // console.log("token controller: ", token)
     const users = await this.userService.fetchUserInfos(token);
     return users;
   }
@@ -53,7 +53,7 @@ export class UsersController {
     @Body() userCredsDto: LoginUserDto,
     // @Res({ passthrough: true }) response: Response
   ) {
-    console.log("user reçu: ", userCredsDto);
+    // console.log("user reçu: ", userCredsDto);
     const user = await this.userService.findUser(userCredsDto);
 
     if (!user) {

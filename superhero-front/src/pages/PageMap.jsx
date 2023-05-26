@@ -22,7 +22,7 @@ function PageMap({ isLoaded }) {
 
   const handleSetDecla = (decla) => {
     setAddDecla(decla);
-    console.log("Tu recois les cords: ", decla);
+    // console.log("Tu recois les cords: ", decla);
   };
   const handleSelectedMarker = (item) => {
     setSelectedMarker(item);
@@ -32,7 +32,7 @@ function PageMap({ isLoaded }) {
     setAddSearchCircle(item);
     if (item.id) {
       const result = await fetchNearestSuperheros(item.id);
-      console.log("le result superhero: ", result);
+      // console.log("le result superhero: ", result);
       setNearestSuperheros(result.data);
       setSelectedMarker(item);
       // setNearestSuperheros((nearestSuperheros) => [...nearestSuperheros, result]);

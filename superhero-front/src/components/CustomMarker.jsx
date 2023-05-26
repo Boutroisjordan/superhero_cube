@@ -33,7 +33,7 @@ export default function CustomMarker(props) {
   const [incidents, setIncidents] = useState(props.incidents ?? null);
 
   const handleMarkerClick = (e) => {
-    console.log("coucou lolo", e);
+    // console.log("coucou lolo", e);
     handleOpenWindowInfo();
   };
 
@@ -47,12 +47,12 @@ export default function CustomMarker(props) {
 
   useEffect(() => {
     // setPositions(props.position);
-    console.log("les props: ", props.position);
+    // console.log("les props: ", props.position);
   }, []);
 
   useEffect(() => {
     // setPositions(props.position);
-    console.log("logo: ", props.type);
+    // console.log("logo: ", props.type);
     setLogo(logoMap[props.type] || null);
   }, [logo]);
 

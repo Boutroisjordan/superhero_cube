@@ -23,9 +23,6 @@ export const PlacesAutocomplete = ({ placeholder, setSelected, getName }) => {
     const result = await getGeocode({ address });
     const { lat, lng } = await getLatLng(result[0]);
     setSelected({ lat, lng });
-    console.log("lalala valeuuuuuuur: ", value);
-    console.log("lalala valeuuuuuuur2222: ", result[0].address_components[0]);
-    console.log("lalala valeuuuuuuur2222: ");
 
     if (getName) {
       getName(result[0].address_components[0].long_name);
@@ -58,18 +55,10 @@ export const PlacesAutocomplete = ({ placeholder, setSelected, getName }) => {
               value={description}
               onClick={() => handleSelect(description)}
             >
-              {console.log("ouvert ou pas ?: ", open)}
               {description}
             </StyledComponents.Option>
           ))}
       </StyledComponents.WrapperOptions>
-      {/* </div> */}
-      {/* <input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        disabled={!ready}
-        placeholder="search address"
-      /> */}
     </>
   );
 };

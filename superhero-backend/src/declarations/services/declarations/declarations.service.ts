@@ -37,7 +37,6 @@ export class DeclarationsService {
       }
     });
     incident = incidentDto;
-    console.log("incident bordel: ", incident, " ", declarationDetails.incident.id);
 
     if (declarationDetails.superheros) {
 
@@ -52,10 +51,7 @@ export class DeclarationsService {
       }
     }
 
-    console.log(`les coords de la déclaration:{
-      lat: ${declarationDetails.lat},
-      lng: ${declarationDetails.lng}
-    } `)
+
 
     const start = {
       latitude: 49.0270129,
@@ -74,9 +70,9 @@ export class DeclarationsService {
     for (const superhero of nearestSuperheros) {
 
       const distance = calculateDistance(superhero.latitude, superhero.longitude, declarationDetails.lat, declarationDetails.lng);
-      console.log("superhero nearest: ", distance, " name: ", superhero.name, " ", distance < 0)
 
-      console.log(distance);
+
+
       if (distance < 50) {
         // superherosArray.push(superhero);
         const hasIncidentWithName = superhero.incidents.some((incident: Incident) => incident.name === 'braquage');
@@ -85,7 +81,7 @@ export class DeclarationsService {
 
     }
 
-    console.log("coucou: ", superherosArray)
+
 
     const newDeclaration = this.declarationRepository.create({ ...declarationDetails, incident, superheros });
     // return newDeclaration;
@@ -98,7 +94,7 @@ export class DeclarationsService {
 
   async updateDeclaration(id: number, updateDeclarationDto: updateDeclarationDto) {
     const findDeclaration = await this.declarationRepository.findOne({ where: { id: id }, relations: ["incident", "superheros"] });
-    console.log(findDeclaration, " OOOGG");
+
 
     if (!findDeclaration) {
       throw new Error("introuvable");
@@ -117,29 +113,39 @@ export class DeclarationsService {
       }
     });
 
+    if (findDeclaration.incident.id === updateDeclarationDto.incident.id) {
+      findDeclaration.incident = incidentDto;
 
-    incident = incidentDto;
+
+    }
+
+
 
     // console.log("l'incident after: ", incidentDto)
 
 
+    if (updateDeclarationDto.superheros != undefined) {
 
-    if (updateDeclarationDto.superheros.length > 0) {
+      if (updateDeclarationDto.superheros.length > 0) {
 
-      for (const superheroDto of updateDeclarationDto.superheros) {
-        const superhero = await this.superheroRepository.findOneOrFail({
-          where: {
-            id: superheroDto.id,
-          }
-        })
+        for (const superheroDto of updateDeclarationDto.superheros) {
+          const superhero = await this.superheroRepository.findOneOrFail({
+            where: {
+              id: superheroDto.id,
+            }
+          })
+
+          if (findDeclaration.superheros.some((item) => item.id != superhero.id)) {
+
         superheros.push(superhero);
+      }
+    }
       }
     }
     if (updateDeclarationDto.details) findDeclaration.details = updateDeclarationDto.details;
     findDeclaration.lat = updateDeclarationDto.lat;
     findDeclaration.lng = updateDeclarationDto.lng;
     findDeclaration.name = updateDeclarationDto.name;
-    findDeclaration.incident = incident;
     findDeclaration.superheros = superheros;
 
 
@@ -147,7 +153,7 @@ export class DeclarationsService {
   }
 
   async deleteDeclaration(id: number) {
-    console.log("le delete id: ", id)
+
 
     const declaration = await this.declarationRepository.findOne({
       where: {

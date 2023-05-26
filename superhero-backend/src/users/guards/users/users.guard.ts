@@ -17,11 +17,11 @@ export class UsersGuard implements CanActivate {
       return true; // Si aucun rôle n'est spécifié pour cette route, l'accès est autorisé
     }
     
-    console.log("role requis: ", requiredRoles);
+    // console.log("role requis: ", requiredRoles);
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request.headers.authorization);
-    console.log("token: ", token);
+    // console.log("token: ", token);
 
     if (!token) {
       return false; // Si le jeton n'est pas présent dans l'en-tête de la requête, l'accès est refusé

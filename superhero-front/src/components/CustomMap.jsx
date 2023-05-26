@@ -26,13 +26,15 @@ function CustomMap(props) {
 
   const [circle, setCircle] = useState(props.circle);
   const [superheros, setSuperheros] = useState(props.superheros);
-  const [declarationsData, setDeclarationsData] = useState(null);
+  const [declarationsData, setDeclarationsData] = useState(declarations);
   const [selectedMarker, setSelectedMarker] = useState(
     props.selectedMarker ?? null
   );
 
   const handleFetchData = async () => {
     const result = await fetchDeclarations();
+    console.log("les donnes ", result);
+    setDeclarationsData(result.data);
   };
 
   const handleMapClick = (e) => {
@@ -47,22 +49,25 @@ function CustomMap(props) {
       setCircle(null);
       setSuperheros(null);
       setSelectedMarker(null);
-      console.log("La distance est supérieure au rayon du cercle");
+      // console.log("La distance est supérieure au rayon du cercle");
     }
   };
 
   useEffect(() => {
     handleFetchData();
     setSuperheros(props.superheros);
-    console.log(declarations, " declarations");
+    // console.log(declarations, " declarations");
   }, []);
 
   useEffect(() => {
     setCircle(props.circle);
   }, [props.circle]);
+  useEffect(() => {
+    setDeclarationsData(declarations);
+  }, [declarations]);
 
   useEffect(() => {
-    console.log(props.superheros, "sale histoire");
+    // console.log(props.superheros, "sale histoire");
     setSuperheros(props.superheros);
   }, [props.superheros]);
 
@@ -79,8 +84,8 @@ function CustomMap(props) {
         options={options}
         onClick={handleMapClick}
       >
-        {declarations != null &&
-          declarations.map((declaration) => {
+        {declarationsData != null &&
+          declarationsData.map((declaration) => {
             if (
               selectedMarker != null &&
               declaration.id === selectedMarker.id
@@ -109,11 +114,20 @@ function CustomMap(props) {
           })}
 
         {/* {props.selected && selectedMarker === null ? (
+          // console.log("le selected: ", props.selected)
           <MarkerF
             position={{ lat: props.selected.lat, lng: props.selected.lng }}
             zoomOnClick={true}
           ></MarkerF>
         ) : null} */}
+
+        {props.selected ? (
+          // console.log("le selected: ", props.selected)
+          <MarkerF
+            position={{ lat: props.selected.lat, lng: props.selected.lng }}
+            zoomOnClick={true}
+          ></MarkerF>
+        ) : null}
 
         {circle ? (
           <CircleF

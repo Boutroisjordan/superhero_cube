@@ -205,7 +205,7 @@ function Declaration() {
 
   const [value, setValue] = useState(false);
   const [selected, setSelected] = useState(false);
-  <PlacesAutocomplete setSelected={setSelected} />
+  <PlacesAutocomplete setSelected={setSelected} />;
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -219,13 +219,6 @@ function Declaration() {
       file: false,
       token: user,
     };
-    // const response = await postLogin(data, params);
-
-    // if (response.status === HttpStatusCode.Created) {
-    //   setUser(response.data.jwt);
-    //   setToken(response.data.jwt);
-    //   setUsername(response.data.username);
-    // }
   };
 
   const handleChangePassword = (e) => {
@@ -235,29 +228,29 @@ function Declaration() {
   const handleChangeEmail = (e) => {
     setEmail(e.target.value);
   };
-  const handlefetch = async (e) => {
-    // let result = await fetchUsers();
-    // setExam(result);
-  };
-  const onPlaceSelect = (someshit) => {
-    console.log("someshite: ", someshit);
+  // const handlefetch = async (e) => {
+  //   // let result = await fetchUsers();
+  //   // setExam(result);
+  // };
+  // const onPlaceSelect = (someshit) => {
+  //   // console.log("someshite: ", someshit);
 
-    // let result = await fetchUsers();
-    // setExam(result);
-  };
-  const onPlaceload = (someshit) => {
-    console.log("someshite: ", someshit);
+  //   // let result = await fetchUsers();
+  //   // setExam(result);
+  // };
+  // const onPlaceload = (someshit) => {
+  //   // console.log("someshite: ", someshit);
 
-    // let result = await fetchUsers();
-    // setExam(result);
-  };
+  //   // let result = await fetchUsers();
+  //   // setExam(result);
+  // };
 
   useEffect(() => {
     // handlefetch();
   }, []);
   const handlePlaceSelect = (place) => {
     // Récupérez les détails du lieu sélectionné ici
-    console.log("dans la place: ", place);
+    // console.log("dans la place: ", place);
   };
 
   if (!isLoaded) return <div>Loading ...</div>;
@@ -285,79 +278,6 @@ function Declaration() {
             onChange={(e) => handleChangeEmail(e)}
             placeholder="Email"
           />
-          {/* Adresse: {email}
-          <Input
-            type="text"
-            name="adress"
-            value={email}
-            onChange={(e) => handleChangeEmail(e)}
-            placeholder="adress"
-          /> */}
-          {/* <Autocomplete
-            onLoad={(autocomplete) => console.log(autocomplete)}
-            onPlaceChanged={handlePlaceSelect}
-          /> */}
-          {/* <Autocomplete
-            onPlaceChanged={(place) => onPlaceSelect(place)}
-            // onLoad={onPlaceLoad}
-          >
-            <input
-              type="text"
-              placeholder="Search for Tide Information"
-              value={value}
-              style={{
-                boxSizing: `border-box`,
-                border: `1px solid transparent`,
-                width: `240px`,
-                height: `32px`,
-                padding: `0 12px`,
-                borderRadius: `3px`,
-                boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-                fontSize: `14px`,
-                outline: `none`,
-                textOverflow: `ellipses`,
-              }}
-            />
-          </Autocomplete> */}
-          {/* <GooglePlacesAutocomplete
-            GooglePlacesDetailsQuery={{ fields: "geometry" }}
-            // onPlaceSelected={(place) => {
-            //   // console.log("Lat", place.geometry.location.lat());
-            //   // console.log("Lng", place.geometry.location.lng());
-            //   // console.log("place", place);
-            //   // setValue(place);
-            // }}
-            fetchDetails={true}
-            selectProps={{
-              value: value,
-              onChange: handlePlace,
-            }}
-            styles={{
-              textInputContainer: {
-                backgroundColor: "grey",
-              },
-              textInput: {
-                height: 38,
-                color: "#5d5d5d",
-                fontSize: 16,
-              },
-              predefinedPlacesDescription: {
-                color: "#1faadb",
-              },
-            }}
-            OnSelect={(data) => {
-              handleAnother(data);
-              const { lat, lng } = data.geometry.location;
-              console.log("Latitude:", lat);
-              console.log("Longitude:", lng);
-            }}
-            onPress={(data) => {
-              handleAnother(data);
-              const { lat, lng } = data.geometry.location;
-              console.log("Latitude:", lat);
-              console.log("Longitude:", lng);
-            }}
-          /> */}
           <PlacesAutocomplete setSelected={setSelected} />
           <Button onClick={handleSubmit}>Next</Button>
         </Form>

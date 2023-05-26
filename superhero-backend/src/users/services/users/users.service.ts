@@ -29,7 +29,7 @@ export class UsersService {
 
   async fetchUserInfos(token: string) {
 
-    console.log("token", token)
+    // console.log("token", token)
 
     const decodedToken = this.jwtService.verify(token); // Décode le jeton JWT
     const userId = decodedToken.id;
@@ -38,33 +38,17 @@ export class UsersService {
     return user;
   }
 
-  // async createUser(userDetails: CreateUserDto): Promise<User> {
-  //   const newUser = this.userRepository.create({ ...userDetails });
-  //   this.userRepository.save(newUser);
-  //   return newUser;
-  // }
+
 
   async createUser(userDetails: CreateUserDto) {
 
     const role = await this.roleRepository.findOne({ where: { id: 1 } });
 
     const newUser = this.userRepository.create({ ...userDetails, role });
-    console.log("User created")
+    // console.log("User created")
     return await this.userRepository.save(newUser);
   }
 
-
-  // async createSuperhero(superheroDetails: createSuperheroDto) {
-  //   const incidents: Incident[] = [];
-
-  //   for (const incidentDto of superheroDetails.incidents) {
-  //     const incident = await this.incidentRepository.findOneBy({ name: incidentDto.name });
-  //     incidents.push(incident);
-  //   }
-
-  //   const newSuperhero = this.superheroRepository.create({ ...superheroDetails, incidents });
-  //   return this.superheroRepository.save(newSuperhero);
-  // }
 
   async findUser(userCredentials: LoginUserDto): Promise<User> {
     const findingUser = await this.userRepository.findOne({

@@ -275,7 +275,7 @@ function RegisterUsers() {
       case 1:
         return (
           <Wrapper>
-            {placesValue ?? "No"}
+            {/* {placesValue ?? ""} */}
             <PlacesAutocomplete
               getName={handleGetPlacesName}
               setSelected={setCoords}
@@ -313,10 +313,10 @@ function RegisterUsers() {
             <Input
               type="password"
               name="passwordrepeat"
-              value={passwordRepeat}
+              value={passwordRepeat ?? ""}
               onChange={(e) => {
                 setPasswordRepeat(e.target.value);
-                setHasErrorForm("");
+                // setHasErrorForm("");
               }}
               placeholder="Confirmer mot de passe *"
             />

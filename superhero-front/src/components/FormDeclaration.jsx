@@ -5,8 +5,13 @@ import { Player, Controls } from "@lottiefiles/react-lottie-player";
 import { MainContext } from "../context/MainContext.jsx";
 
 export default function FormDeclaration(props) {
-  const { fetchIncidentTypes, fetchDeclarations, postDeclaration, user } =
-    useContext(MainContext);
+  const {
+    declarations,
+    fetchIncidentTypes,
+    fetchDeclarations,
+    postDeclaration,
+    user,
+  } = useContext(MainContext);
   const [step, setStep] = useState(1);
   const [openDecla, setOpenDecla] = useState(false);
   const [coords, setCoords] = useState(false);
@@ -25,7 +30,6 @@ export default function FormDeclaration(props) {
       setStep(1);
     }
     setOpenDecla(bool);
-    console.log("bitass : ", bool);
   };
 
   const nextStep = (e) => {
@@ -47,7 +51,6 @@ export default function FormDeclaration(props) {
     //   // handleMoveToPosition();
     //   setStep(step + 1);
     // }
-    console.log("pas bon");
     // setStep(step + 1);
 
     setHasErrorForm("Veuillez renseigner les champs obligatoire");
@@ -99,7 +102,7 @@ export default function FormDeclaration(props) {
       },
     };
 
-    console.log("dadadata: ", data);
+    // console.log("dadadata: ", data);
     let params = {
       file: false,
       token: user,
@@ -108,14 +111,11 @@ export default function FormDeclaration(props) {
     try {
       const result = await postDeclaration(data, user);
       if (result.status === 200 || result.status === 201) {
-        console.log("Le resultas du post:");
         fetchDeclarations();
         handleOpenDeclaration(false);
+        props.cbDecla(null);
         setStep(1);
-        //Afficher les superhéros compatible et leur kilométrage
-        // setUser(result.data.jwt);
-        // setToken(result.data.jwt);
-        // setUsername(result.data.username);
+        console.log("Création ok, ", result);
       } else {
         throw new Error("Erreur HTTP ");
       }
@@ -170,7 +170,7 @@ export default function FormDeclaration(props) {
                 }}
               >
                 {" "}
-                {hasErrorForm ?? null}
+                {/* {hasErrorForm ?? null} */}
               </p>
             </div>
             <StyledComponents.TextArea
@@ -206,7 +206,7 @@ export default function FormDeclaration(props) {
                     // onClick={(item) => handleSelectIncident(item)}
                     // onSelect={(item) => handleSelectIncident(item)}
                   >
-                    {item.name}
+                    {item.realName}
                   </option>
                 );
               })}
@@ -250,7 +250,6 @@ export default function FormDeclaration(props) {
                 buttons={["play", "repeat", "frame", "debug"]}
               />
             </Player>
-
             <StyledComponents.WrapperFlex>
               <StyledComponents.Button2 onClick={prevStep}>
                 Non
